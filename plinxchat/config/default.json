@@ -9,10 +9,15 @@
   "ts": true,
   "authentication": {
     "oauth": {
-      "redirect": "/",
+      "redirect": "http://localhost:3000",
       "github": {
-        "key": "<Client ID>",
-        "secret": "<Client secret>"
+        "key": "4930c14cf91fbd826599",
+        "secret": "e7ab1f999bf325ad0fbbbaa10c2de6507c2c6a35"
+      },
+      "google": {
+        "key": "77750088515-l9ethdppd3c82r8l4bpgah250phjt96u.apps.googleusercontent.com",
+        "secret": "BBzAr8IB7KOYAySe5yDLsUg_",
+        "scope" : ["email","profile","openid"]
       }
     },
     "entity": "user",

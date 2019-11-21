@@ -9,18 +9,16 @@ interface userBarProps {
 export const UsersBar = (props: userBarProps) => {
     const { users, onLogout } = props;
     return (
-        <Segment>
-            <Label as='a' color='blue' ribbon>
+        <Segment style={{ backgroundColor: "rgba(0,0,0,0.5)"}}>
+            <Label as='a' color="teal" ribbon>
                 {users && users.length} active users
             </Label>
-
             <List>
                 {users && users.map(user =>
                     <List.Item>
                         <Image avatar src={user.avatar} alt={user.email} />
                         <List.Content>
-                            <List.Header as='a'>{user.email ? user.email : "Guest"}</List.Header>
-
+                            <List.Header style={{color:"white"}} >{user.email ? user.email : "Guest"}</List.Header>
                         </List.Content>
                     </List.Item>
                 )}

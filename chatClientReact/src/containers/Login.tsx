@@ -27,7 +27,7 @@ const Login = () => {
             email, password
         }).then((r) => console.log(r)).catch(e => console.error("Something went wrong " + e));
     }
-
+   
     const signup = (): void =>
         client.service('users')
             .create({ email, password })
@@ -42,15 +42,17 @@ const Login = () => {
                 <Header as='h2' style={{ color: "white" }} textAlign='center'>
                     Log-in to {appSettings.projectName}
                 </Header>
-                <Form size='large'>
+                <Form onSubmit={login}  size='large'>
                     <Segment stacked>
                         <Form.Input
+                            required
                             fluid
                             icon='user'
                             iconPosition='left'
                             placeholder='E-mail address'
                             onChange={ev => updateField('email', ev)} />
                         <Form.Input
+                            required
                             fluid
                             icon='lock'
                             iconPosition='left'
@@ -58,14 +60,14 @@ const Login = () => {
                             type='password'
                             onChange={ev => updateField('password', ev)}
                         />
-                        <Button color='teal' onClick={login} fluid size='large'> Login</Button>
+                        <Button color='teal' fluid size='large'> Login</Button>
                     </Segment>
                 </Form>
                 <Segment>
-                    <Icon className="github" /> <small>Login with github</small>
+                   <a href="http://localhost:3030/oauth/github" target="_blank"> <Icon className="github" /> <small>Login with github</small></a>
                 </Segment>
                 <Segment>
-                    <Icon className="google" /> <small>Login with google</small>
+                <a href="http://localhost:3030/oauth/google" target="_blank"> <Icon className="google" /> <small>Login with google</small></a>
                 </Segment>
                 <br />
                 <Message>

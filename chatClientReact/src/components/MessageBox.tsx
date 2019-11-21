@@ -13,10 +13,10 @@ export const MessageBox = (props: MessageBoxProps) => {
 
     const { messages } = props;
     return (
-        <Segment style={{ height: "80vh", overflow: "auto" }} >
+        <Segment style={{ height: "80vh", overflow: "auto",  backgroundColor: "rgba(0,0,0,0.5)" }} >
             <main ref={main => { chat = main; }}>
                 {messages && messages.map(message => <div key={message._id}>
-                    <Message style={{marginTop:"5px"}} image>
+                    <Message color="black" style={{ backgroundColor: "rgba(50,50,50,0.9)"}} image>
                         <Message.Content>
                             <Message.Header> <Image avatar src={message.user.avatar} />
                                 {message.user.email} - <small>{moment(message.createdAt).format('MMM Do, hh:mm:ss')}</small></Message.Header>
