@@ -1,6 +1,4 @@
 import { Route, Switch } from "react-router";
-import Chat from "./containers/Chat";
-import Login from "./containers/Login";
 import MessageService from "./containers/MessageService";
 
 import * as React from 'react';
@@ -18,4 +16,4 @@ const RouteModule = () => {
         </Switch>)
 }
 
-export default RouteModule
+export default RouteModule  

@@ -5,7 +5,6 @@ import { UsersBar } from "../components/UsersBar";
 import { MessageBox } from "../components/MessageBox";
 import { Grid, Image } from "semantic-ui-react";
 import { InputBox } from "../components/InputBox"
-import backgroundImg from "../assets/world.jpg";
 
 interface ChatProps {
   users: any[],
@@ -56,8 +55,7 @@ const Chat = (props: ChatProps) => {
   const { users, messages } = props;
 
   return (
-    <React.Fragment>
-      <Image style={style.backgroundImg} src={backgroundImg} />
+    <React.Fragment>      
       <br/>
       <div>
         <Grid >

@@ -12,3 +12,20 @@ code {
     monospace;
 }
 
+.video-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: inherit;
+  height: auto;  
+}
+
+.login-element:hover{
+  opacity: 1;
+}

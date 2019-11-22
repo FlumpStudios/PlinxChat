@@ -1,9 +1,10 @@
 import appSettings from "../appSettings";
 import React from 'react'
 import { useState, useEffect, Children } from 'react'
-import { Button, Form, Grid, Header, Icon, Message, Segment, Image } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Icon, Message, Segment, Checkbox } from 'semantic-ui-react'
 import chatImage from "../assets/chatimageDark.jpg"
 import client from '../feathers';
+
 import { AuthenticationResult } from "@feathersjs/authentication/lib";
 
 const imageStyle = {
@@ -18,7 +19,6 @@ const Login = () => {
     const updateField = (name: string, ev: any): void => {
         if (name === 'email') setEmail(ev.target.value);
         else if (name === 'password') setPassword(ev.target.value);
-
     }
 
     const login = (): AuthenticationResult => {
@@ -35,14 +35,12 @@ const Login = () => {
 
 
     return (<React.Fragment>
-        <Image style={imageStyle} fluid src={chatImage} />
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-
-            <Grid.Column style={{ maxWidth: 450 }}>
+            <Grid.Column style={{ maxWidth: 450, opacity:"0.92" }}>
                 <Header as='h2' style={{ color: "white" }} textAlign='center'>
                     Log-in to {appSettings.projectName}
                 </Header>
-                <Form onSubmit={login}  size='large'>
+                <Form onSubmit={login}  size='large'>   
                     <Segment stacked>
                         <Form.Input
                             required
@@ -60,17 +58,19 @@ const Login = () => {
                             type='password'
                             onChange={ev => updateField('password', ev)}
                         />
-                        <Button color='teal' fluid size='large'> Login</Button>
+                        <Button className="login-element" color='teal' fluid size='large'> Login</Button>
+                        <br/>                     
                     </Segment>
                 </Form>
-                <Segment>
+                <Button className="login-element" color='teal' fluid size='large'> <small>Continue as guest</small></Button>
+                <Segment className="login-element">
                    <a href="http://localhost:3030/oauth/github" target="_blank"> <Icon className="github" /> <small>Login with github</small></a>
                 </Segment>
-                <Segment>
+                <Segment className="login-element">
                 <a href="http://localhost:3030/oauth/google" target="_blank"> <Icon className="google" /> <small>Login with google</small></a>
                 </Segment>
                 <br />
-                <Message>
+                <Message className="login-element">
                     New to us? <a onClick={signup} href='#'>Sign Up</a>
                 </Message>
             </Grid.Column>

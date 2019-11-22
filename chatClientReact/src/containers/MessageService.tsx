@@ -3,6 +3,7 @@ import { useState, useEffect, Children } from 'react'
 import Login from './Login';
 import Chat from './Chat';
 import client from '../feathers';
+import {BackgroundVid} from "../components/BackgroundVid";
 
 const MessageService = () => {
     const [loginState, setLogin] = useState(null);
@@ -52,21 +53,32 @@ const MessageService = () => {
         messages.on('created', (message: any) => {
             setMessageList(messageList.concat(message));
             console.log("ADDED");
-        
+
         });
 
         users.on('created', (user: any) => setUsers(usersList.concat(user)));
     }, [messageList]);
 
+    
     if (loginState === undefined) {
         return <main className="container text-center">
             <h1>Loading...</h1>
         </main>;
     } else if (loginState) {
-        return <Chat messages={messageList} users={usersList} />
+        return (
+        <React.Fragment> 
+            <BackgroundVid/>           
+            <Chat messages={messageList} users={usersList} />)
+        </React.Fragment>);
     }
 
-    return <Login />;
+    return (
+        <React.Fragment>        
+            <BackgroundVid/>
+            <Login />
+        </React.Fragment>
+
+    );
 
 }
 
