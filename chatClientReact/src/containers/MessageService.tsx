@@ -3,7 +3,7 @@ import { useState, useEffect, Children } from 'react'
 import Login from './Login';
 import Chat from './Chat';
 import client from '../feathers';
-import {BackgroundVid} from "../components/BackgroundVid";
+
 
 const MessageService = () => {
     const [loginState, setLogin] = useState(null);
@@ -67,14 +67,14 @@ const MessageService = () => {
     } else if (loginState) {
         return (
         <React.Fragment> 
-            <BackgroundVid/>           
+                    
             <Chat messages={messageList} users={usersList} />)
         </React.Fragment>);
     }
 
     return (
         <React.Fragment>        
-            <BackgroundVid/>
+            
             <Login />
         </React.Fragment>
 

@@ -4,9 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom'
+import {BackgroundVid} from "./components/BackgroundVid";
 
 ReactDOM.render(
     <BrowserRouter>
+    <BackgroundVid/>
         <App />
     </BrowserRouter>,
 
