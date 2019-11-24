@@ -1,27 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import client from '../feathers';
 import { useEffect } from 'react'
 import { UsersBar } from "../components/UsersBar";
 import { MessageBox } from "../components/MessageBox";
-import { Grid, Image } from "semantic-ui-react";
+import { Grid, Label } from "semantic-ui-react";
 import { InputBox } from "../components/InputBox"
+import { SketchBox } from "../components/SketchBox"
+import { type } from 'os';
 
 interface ChatProps {
   users: any[],
   messages: any[];
 }
+type windowType = (
+  "Chat" | "Sketch"
+);
+
+const style = {
+  windowLabels: {
+    cursor:"pointer"
+  }
+}
 
 const Chat = (props: ChatProps) => {
 
-  const style = {
-    backgroundImg: {
-      position: "fixed",
-      height:"100%",
-      width:"100%",
-    }
-  }
+  const { users, messages } = props;
+  const [window, setWindow] = useState<windowType> ("Chat");
 
   const sendMessage = (ev: any) => {
+    setWindow("Chat");
     const input = ev.target.querySelector('[name="text"]');
     const text = input.value.trim();
 
@@ -51,9 +58,6 @@ const Chat = (props: ChatProps) => {
     };
   }, []);
 
-
-  const { users, messages } = props;
-
   return (
     <React.Fragment>      
       <br/>
@@ -66,8 +70,22 @@ const Chat = (props: ChatProps) => {
               <UsersBar onLogout={() => client.logout()} users={users} />
             </Grid.Column>
             <Grid.Column width={10}>
-              <MessageBox messages={messages} />
-              <InputBox sendMessage={sendMessage} />
+            <Label
+              style={style.windowLabels}             
+              color={window === "Sketch" ? "grey" : "teal" }
+              onClick={() => setWindow("Chat")}
+             >
+                Chat
+              </Label>
+              <Label 
+                style={style.windowLabels}
+                color={window === "Chat" ? "grey" : "teal" }
+                onClick={() => setWindow("Sketch")}
+                >
+                Sketch
+              </Label>
+              {window === "Chat" ? <MessageBox messages={messages}/>  : <SketchBox/>}              
+              <InputBox sendMessage={sendMessage}/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
