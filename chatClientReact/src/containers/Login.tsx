@@ -1,14 +1,10 @@
 import appSettings from "../appSettings";
 import React from 'react'
 import { useState, useEffect, Children } from 'react'
-import { Button, Form, Grid, Header, Icon, Message, Segment, Checkbox } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Icon, Message, Segment } from 'semantic-ui-react'
 import client from '../feathers';
 
 import { AuthenticationResult } from "@feathersjs/authentication/lib";
-
-const imageStyle = {
-    position: "fixed"
-};
 
 
 const Login = () => {

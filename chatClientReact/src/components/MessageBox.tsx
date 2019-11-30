@@ -2,8 +2,6 @@ import moment from 'moment';
 import * as React from 'react';
 import { Segment, Message, Image, Label } from "semantic-ui-react";
 
-
-
 interface MessageBoxProps {
     messages: any[];
 }

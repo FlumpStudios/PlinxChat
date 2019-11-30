@@ -6,11 +6,14 @@ import { MessageBox } from "../components/MessageBox";
 import { Grid, Label } from "semantic-ui-react";
 import { InputBox } from "../components/InputBox"
 import { SketchBox } from "../components/SketchBox"
-import { type } from 'os';
+import { ISketchData }  from "../sharedInterfaces/ISketchData";
+import { saveSessionData, loadSessionData } from "../tools/storeageHelper"
 
 interface ChatProps {
   users: any[],
   messages: any[];
+  userId: string;
+  sketchList : ISketchData[];
 }
 type windowType = (
   "Chat" | "Sketch"
@@ -23,16 +26,15 @@ const style = {
 }
 
 const Chat = (props: ChatProps) => {
-
-  const { users, messages } = props;
+  const { users, messages, userId, sketchList } = props;
   const [window, setWindow] = useState<windowType> ("Chat");
-
+  
   const sendMessage = (ev: any) => {
     setWindow("Chat");
     const input = ev.target.querySelector('[name="text"]');
     const text = input.value.trim();
 
-    if (text) {
+    if (text) { 
       client.service('messages').create({ text }).then(() => {
         input.value = '';
       });
@@ -45,9 +47,19 @@ const Chat = (props: ChatProps) => {
     //TODO: Add some scroll to bottom stuff here 
   }
 
+  const handleUpdateSketch = (data: ISketchData) =>
+      client.service('sketches').create({ data });
+   
+  const handleSetToChat = () => {
+    setWindow("Chat");
+  };
+
+  const handleSetToSketch = () => {
+    setWindow("Sketch")
+  }
+
   useEffect(() => {
     client.service('messages').on('created', scrollToBottom);
-
     scrollToBottom();
   }, []);
 
@@ -73,18 +85,18 @@ const Chat = (props: ChatProps) => {
             <Label
               style={style.windowLabels}             
               color={window === "Sketch" ? "grey" : "teal" }
-              onClick={() => setWindow("Chat")}
+              onClick={handleSetToChat}
              >
                 Chat
               </Label>
               <Label 
                 style={style.windowLabels}
                 color={window === "Chat" ? "grey" : "teal" }
-                onClick={() => setWindow("Sketch")}
+                onClick={handleSetToSketch}
                 >
                 Sketch
               </Label>
-              {window === "Chat" ? <MessageBox messages={messages}/>  : <SketchBox/>}              
+              {window === "Chat" ? <MessageBox messages={messages}/>  : <SketchBox userId={userId}  sketchInfo={sketchList} onUpdateSketchInfor={handleUpdateSketch}/>}              
               <InputBox sendMessage={sendMessage}/>
             </Grid.Column>
           </Grid.Row>
