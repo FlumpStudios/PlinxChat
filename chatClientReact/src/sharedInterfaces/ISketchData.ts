@@ -3,7 +3,8 @@ export interface ISketchData{
   data:{ x: number,
     y: number,
     px: number,
-    py: number
+    py: number,
+    userId: string
    }
   }
   

@@ -20,8 +20,7 @@ export default function (app: Application) {
   app.use('/sketches', new Sketches(options, app));
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('sketches');
-  console.log(app);
+  const service = app.service('sketches'); 
 
   service.hooks(hooks);
 }

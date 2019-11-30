@@ -7,7 +7,6 @@ import { Grid, Label } from "semantic-ui-react";
 import { InputBox } from "../components/InputBox"
 import { SketchBox } from "../components/SketchBox"
 import { ISketchData }  from "../sharedInterfaces/ISketchData";
-import { saveSessionData, loadSessionData } from "../tools/storeageHelper"
 
 interface ChatProps {
   users: any[],
@@ -96,7 +95,7 @@ const Chat = (props: ChatProps) => {
                 >
                 Sketch
               </Label>
-              {window === "Chat" ? <MessageBox messages={messages}/>  : <SketchBox userId={userId}  sketchInfo={sketchList} onUpdateSketchInfor={handleUpdateSketch}/>}              
+              {window === "Chat" ? <MessageBox messages={messages}/>  : <SketchBox activeUserId={userId}  sketchInfo={sketchList} onUpdateSketchInfor={handleUpdateSketch}/>}              
               <InputBox sendMessage={sendMessage}/>
             </Grid.Column>
           </Grid.Row>

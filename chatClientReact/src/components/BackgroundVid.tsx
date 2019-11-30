@@ -11,6 +11,6 @@ export const BackgroundVid = () => {
                 playsInline
                 muted
                 src={video}
-                onLoadedData={() => { console.log("HELLO") }}
+                onLoadedData={() => { console.log("Loaded") }}
             />
         </div>)}

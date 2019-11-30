@@ -25,7 +25,7 @@ const MessageService = () => {
     const [sketchList,setSketchs] = useState([]);
 
     useEffect(() => {
-        console.log("START");
+        console.log("Started");
         const messages = client.service('messages');
         const users = client.service('users');
         const sketches = client.service('sketches');
@@ -59,10 +59,7 @@ const MessageService = () => {
                 setLogin(login)
                 setMessageList(messages);
                 setUsers(users);
-                setSketchs(s);
-                console.log(users)
-                console.log(s)
-                
+                setSketchs(s);                
             });
         });
 
@@ -71,14 +68,12 @@ const MessageService = () => {
             setLogin({})
             setMessageList([]);
             setUsers([])
-            isLoggedIn = false;
+            isLoggedIn = false;          
         });
 
         // Add new messages to the message list
         messages.on('created', (message: any) => {
             setMessageList(messageList.concat(message));
-            console.log("ADDED");
-
         });
         sketches.on('created', (sketch: any) => 
         {           
