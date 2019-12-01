@@ -3,32 +3,23 @@ import { useState, useEffect, Children } from 'react'
 import Login from './Login';
 import Chat from './Chat';
 import client from '../feathers';
-import { setServers } from 'dns';
-
-interface iUserDetails {
-    user?: iUser,
-    authentication?: Object,
-    accessToken?: string
-}
-interface iUser {
-    email: string,
-    avatar: string,
-    _id: string
-}
+import { colourPool } from '../tools/colourPool';
+import { UserDetails  as iUserDetails , User } from "../sharedInterfaces/UserInterfaces"
 
 let isLoggedIn = false;
     
 const MessageService = () => {
     const [loginState, setLogin] = useState<iUserDetails>();
     const [messageList, setMessageList] = useState([]);
-    const [usersList, setUsers] = useState([]);
+    const [usersList, setUsers] = useState<User[]>([]);
     const [sketchList,setSketchs] = useState([]);
 
     useEffect(() => {
-        console.log("Started");
+    
         const messages = client.service('messages');
         const users = client.service('users');
         const sketches = client.service('sketches');
+        
         // Try to authenticate with the JWT stored in localStorage
         client.authenticate().catch(() => setLogin({}));
 
@@ -55,7 +46,19 @@ const MessageService = () => {
                 const messages = messagePage.data.reverse();
                 const users = userPage.data;
                 const s = sketchesPage.data;
-                // Once both return, update the state
+                
+                //Set colour for their sketch bush from the colour pool based on the array position.
+                for (let i = 0; i < users.length; i++) {
+                    if (i > colourPool.length)
+                        users[i].sketchColour = "#ffffff";
+                    else
+                        users[i].sketchColour = colourPool[i];
+                }
+                       
+            console.log(login);
+            
+            console.log(users);
+
                 setLogin(login)
                 setMessageList(messages);
                 setUsers(users);
@@ -65,6 +68,7 @@ const MessageService = () => {
 
         // On logout reset all all local state (which will then show the login screen)
         client.on('logout', () => {
+     
             setLogin({})
             setMessageList([]);
             setUsers([])

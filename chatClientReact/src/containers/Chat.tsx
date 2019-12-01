@@ -6,10 +6,12 @@ import { MessageBox } from "../components/MessageBox";
 import { Grid, Label } from "semantic-ui-react";
 import { InputBox } from "../components/InputBox"
 import { SketchBox } from "../components/SketchBox"
-import { ISketchData }  from "../sharedInterfaces/ISketchData";
+import { ISketchData }  from "../sharedInterfaces/SketchInterfaces";
+import { UserDetails  as iUserDetails , User } from "../sharedInterfaces/UserInterfaces"
+
 
 interface ChatProps {
-  users: any[],
+  users: User[],
   messages: any[];
   userId: string;
   sketchList : ISketchData[];
@@ -95,7 +97,7 @@ const Chat = (props: ChatProps) => {
                 >
                 Sketch
               </Label>
-              {window === "Chat" ? <MessageBox messages={messages}/>  : <SketchBox activeUserId={userId}  sketchInfo={sketchList} onUpdateSketchInfor={handleUpdateSketch}/>}              
+              {window === "Chat" ? <MessageBox messages={messages}/>  : <SketchBox users={users} activeUserId={userId}  sketchInfo={sketchList} onUpdateSketchInfor={handleUpdateSketch}/>}              
               <InputBox sendMessage={sendMessage}/>
             </Grid.Column>
           </Grid.Row>
