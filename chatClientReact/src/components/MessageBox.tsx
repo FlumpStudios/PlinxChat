@@ -19,7 +19,6 @@ export const MessageBox = (props: MessageBoxProps) => {
                             <Message.Header> <Image avatar src={message.user.avatar} />
                                 {message.user.email} - <small>{moment(message.createdAt).format('MMM Do, hh:mm:ss')}</small></Message.Header>
                             <Label basic pointing> {message.text}</Label>
-
                         </Message.Content>
                     </Message>
                 </div>)}

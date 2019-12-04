@@ -1,21 +1,23 @@
 import React, { Component, useState } from 'react';
 import client from '../feathers';
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import { UsersBar } from "../components/UsersBar";
 import { MessageBox } from "../components/MessageBox";
 import { Grid, Label } from "semantic-ui-react";
-import { InputBox } from "../components/InputBox"
-import { SketchBox } from "../components/SketchBox"
-import { ISketchData }  from "../sharedInterfaces/SketchInterfaces";
-import { UserDetails  as iUserDetails , User } from "../sharedInterfaces/UserInterfaces"
-
+import { InputBox } from "../components/InputBox";
+import { SketchBox } from "../components/SketchBox";
+import { ISketchData }  from "../sharedInterfaces/sketchInterfaces";
+import { UserDetails  as iUserDetails , User } from "../sharedInterfaces/userInterfaces";
+import { sketchInfo } from "../sharedInterfaces/sketchInterfaces";
 
 interface ChatProps {
   users: User[],
   messages: any[];
   userId: string;
-  sketchList : ISketchData[];
+  sketchList : sketchInfo[];
+  getSketchDataFromApi:Function;
 }
+
 type windowType = (
   "Chat" | "Sketch"
 );
@@ -27,8 +29,15 @@ const style = {
 }
 
 const Chat = (props: ChatProps) => {
-  const { users, messages, userId, sketchList } = props;
+  const { 
+    users, 
+    messages, 
+    userId, 
+    sketchList, 
+    getSketchDataFromApi } = props; 
   const [window, setWindow] = useState<windowType> ("Chat");
+  const [cachedUserSketch, setCachedUserSketch] = useState<sketchInfo[]> ([]);
+  
   
   const sendMessage = (ev: any) => {
     setWindow("Chat");
@@ -56,7 +65,10 @@ const Chat = (props: ChatProps) => {
   };
 
   const handleSetToSketch = () => {
-    setWindow("Sketch")
+    getSketchDataFromApi().then(() => {
+      setWindow("Sketch");
+    });
+    
   }
 
   useEffect(() => {
@@ -97,7 +109,15 @@ const Chat = (props: ChatProps) => {
                 >
                 Sketch
               </Label>
-              {window === "Chat" ? <MessageBox messages={messages}/>  : <SketchBox users={users} activeUserId={userId}  sketchInfo={sketchList} onUpdateSketchInfor={handleUpdateSketch}/>}              
+              {window === "Chat" ? <MessageBox messages={messages}/>  : 
+              <SketchBox 
+                users={users} 
+                activeUserId={userId}  
+                sketchInfo={sketchList} 
+                onUpdateSketchInfor={handleUpdateSketch}
+                cahedUserSketch={cachedUserSketch}
+                setCahedUserSketch={setCachedUserSketch}
+                />}              
               <InputBox sendMessage={sendMessage}/>
             </Grid.Column>
           </Grid.Row>
