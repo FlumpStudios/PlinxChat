@@ -34,18 +34,12 @@ export const SketchBox = (props: SketchBoxProps) => {
   const setup = (p5: any, canvasParentRef: any) => {
     _p5 = p5;
     p5.frameRate(20)
-    p5.createCanvas(500, 500).parent(canvasParentRef);
+    p5.createCanvas(720, 500).parent(canvasParentRef);
     p5.strokeWeight(10);    
-
-    // for (const i of cahedUserSketch) {
-    //   const user = users.find(x => x._id === activeUserId);    
-    //   p5.stroke(user ? user.sketchColour : null);
-    //   p5.line(i.x, i.y, i.px, i.py);
-    // };
 
     for (const i of sketchInfo) {      
       const user = users.find(x => x._id === i.userId);
-      _p5.stroke(user ? user.sketchColour : null);
+      p5.stroke(user ? user.sketchColour : null);
     
       p5.line(i.x, i.y, i.px, i.py);
     }

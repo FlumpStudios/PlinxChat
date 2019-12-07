@@ -72,9 +72,7 @@ const MessageService = () => {
 
 
     //Helper methods
-    const getSketches = async (): Promise<any> => {
-        console.log("Fetching");
-        console.log(users);
+    const getSketches = async (): Promise<any> => {        
         await sketches.find({
             query: {
                 $sort: { createdAt: -1 },
@@ -118,8 +116,7 @@ const MessageService = () => {
     }
 
     return (
-        <React.Fragment>        
-            
+        <React.Fragment>   
             <Login />
         </React.Fragment>
 

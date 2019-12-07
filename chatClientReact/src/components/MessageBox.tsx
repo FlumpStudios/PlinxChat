@@ -8,7 +8,6 @@ interface MessageBoxProps {
 
 export const MessageBox = (props: MessageBoxProps) => {
     let chat: any = null;
-
     const { messages } = props;
     return (
         <Segment style={{ height: "80vh", overflow: "auto",  backgroundColor: "rgba(0,0,0,0.5)" }} >

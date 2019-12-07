@@ -9,6 +9,7 @@ import { SketchBox } from "../components/SketchBox";
 import { ISketchData }  from "../sharedInterfaces/sketchInterfaces";
 import { UserDetails  as iUserDetails , User } from "../sharedInterfaces/userInterfaces";
 import { sketchInfo } from "../sharedInterfaces/sketchInterfaces";
+import { Codebox } from "../components/CodeBox";
 
 interface ChatProps {
   users: User[],
@@ -19,7 +20,7 @@ interface ChatProps {
 }
 
 type windowType = (
-  "Chat" | "Sketch"
+  "Chat" | "Sketch" | "Code"
 );
 
 const style = {
@@ -36,8 +37,7 @@ const Chat = (props: ChatProps) => {
     sketchList, 
     getSketchDataFromApi } = props; 
   const [window, setWindow] = useState<windowType> ("Chat");
-  const [cachedUserSketch, setCachedUserSketch] = useState<sketchInfo[]> ([]);
-  
+  const [cachedUserSketch, setCachedUserSketch] = useState<sketchInfo[]> ([]);  
   
   const sendMessage = (ev: any) => {
     setWindow("Chat");
@@ -60,9 +60,11 @@ const Chat = (props: ChatProps) => {
   const handleUpdateSketch = (data: ISketchData) =>
       client.service('sketches').create({ data });
    
-  const handleSetToChat = () => {
+  const handleSetToChat = () => 
     setWindow("Chat");
-  };
+
+const handleSetToCode = () => 
+  setWindow("Code");
 
   const handleSetToSketch = () => {
     getSketchDataFromApi().then(() => {
@@ -81,7 +83,34 @@ const Chat = (props: ChatProps) => {
     return () => {
       client.service('messages').removeListener('created', scrollToBottom);
     };
-  }, []);
+  }, []);  
+
+  const sketchBox = () =>
+      <SketchBox 
+        users={users} 
+        activeUserId={userId}  
+        sketchInfo={sketchList} 
+        onUpdateSketchInfor={handleUpdateSketch}
+        cahedUserSketch={cachedUserSketch}
+        setCahedUserSketch={setCachedUserSketch}
+        />
+  
+  const codeBox = () =>
+       <Codebox/>
+
+  const messageBox = () =>
+    <MessageBox messages={messages}/>
+
+   const windowSelector = () => {
+      switch (window) {
+        case "Chat":
+          return messageBox();          
+        case "Sketch":
+          return sketchBox();
+        case "Code":
+          return codeBox();     
+      }
+    }
 
   return (
     <React.Fragment>      
@@ -97,27 +126,26 @@ const Chat = (props: ChatProps) => {
             <Grid.Column width={10}>
             <Label
               style={style.windowLabels}             
-              color={window === "Sketch" ? "grey" : "teal" }
+              color={window === "Chat" ? "teal" : "grey" }
               onClick={handleSetToChat}
              >
                 Chat
               </Label>
               <Label 
                 style={style.windowLabels}
-                color={window === "Chat" ? "grey" : "teal" }
+                color={window === "Sketch" ? "teal" : "grey" }
                 onClick={handleSetToSketch}
                 >
                 Sketch
               </Label>
-              {window === "Chat" ? <MessageBox messages={messages}/>  : 
-              <SketchBox 
-                users={users} 
-                activeUserId={userId}  
-                sketchInfo={sketchList} 
-                onUpdateSketchInfor={handleUpdateSketch}
-                cahedUserSketch={cachedUserSketch}
-                setCahedUserSketch={setCachedUserSketch}
-                />}              
+              <Label 
+                style={style.windowLabels}
+                color={window === "Code" ? "teal" : "grey" }
+                onClick={handleSetToCode}
+                >
+                Code
+              </Label>
+             {windowSelector()}      
               <InputBox sendMessage={sendMessage}/>
             </Grid.Column>
           </Grid.Row>
