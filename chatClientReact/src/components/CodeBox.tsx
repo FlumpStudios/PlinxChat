@@ -1,43 +1,30 @@
-import { Segment, Message, Image, Label, TextArea } from "semantic-ui-react";
-import Editor from 'react-simple-code-editor';
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import AceEditor from "react-ace";
- 
+import {codeInterface} from '../sharedInterfaces/codeInterfaces';
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
+import client from '../feathers';
 
-const style = {
-    codebox : {
-        color: "white",
-        backgroundColor:"transparent",
-        resize:"none"
-    }
-}
 
 interface CodeBoxProps{
-
+  apiDate: string;
+  codeId:string;
 }
 
-export const Codebox = () => {
+
+export const Codebox = (props: CodeBoxProps) => {
   
 const [code, setCode] = useState("");
-  
-  const onChange = (c:string) => 
-  {
-    
-    setCode(c);
-    console.log(c);
-  }
 
-  
-  
+  const onChange = async (c:string = "") =>  
+    await client.service('code').update(props.codeId, {c})
+    
   return <AceEditor
     mode="javascript"
     theme="monokai"
     onChange={onChange}
     name="UNIQUE_ID_OF_DIV"
-    value={code}
+    value={props.apiDate}
     editorProps={{ $blockScrolling: true }}
   /> 
-
 }

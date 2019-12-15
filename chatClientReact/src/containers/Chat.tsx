@@ -9,13 +9,17 @@ import { SketchBox } from "../components/SketchBox";
 import { ISketchData }  from "../sharedInterfaces/sketchInterfaces";
 import { UserDetails  as iUserDetails , User } from "../sharedInterfaces/userInterfaces";
 import { sketchInfo } from "../sharedInterfaces/sketchInterfaces";
+import { codeInterface } from "../sharedInterfaces/codeInterfaces";
 import { Codebox } from "../components/CodeBox";
 
 interface ChatProps {
   users: User[],
   messages: any[];
-  userId: string;
+  userId: string;  
+  codeList: string;
   sketchList : sketchInfo[];
+  codeId : string;
+
   getSketchDataFromApi:Function;
 }
 
@@ -35,6 +39,7 @@ const Chat = (props: ChatProps) => {
     messages, 
     userId, 
     sketchList, 
+    codeList,
     getSketchDataFromApi } = props; 
   const [window, setWindow] = useState<windowType> ("Chat");
   const [cachedUserSketch, setCachedUserSketch] = useState<sketchInfo[]> ([]);  
@@ -52,6 +57,7 @@ const Chat = (props: ChatProps) => {
 
     ev.preventDefault();
   }
+  
 
   const scrollToBottom = () => {
     //TODO: Add some scroll to bottom stuff here 
@@ -96,7 +102,7 @@ const handleSetToCode = () =>
         />
   
   const codeBox = () =>
-       <Codebox/>
+       <Codebox codeId={props.codeId} apiDate={codeList}/>
 
   const messageBox = () =>
     <MessageBox messages={messages}/>
