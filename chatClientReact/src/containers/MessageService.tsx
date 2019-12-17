@@ -15,9 +15,8 @@ const MessageService = () => {
     const [messageList, setMessageList] = useState([]);
     const [usersList, setUsers] = useState<User[]>([]);
     const [sketchList,setSketchs] =  useState<sketchInfo[]>([]);
-    const [codeList, setCode ] = useState<string>("");
-    const [codeId, setCodeId] = useState<string>();
-
+    const [codeList, setCode] = useState<codeInterface>({});
+    
     const messages = client.service('messages');
     const users = client.service('users');
     const sketches = client.service('sketches');
@@ -53,20 +52,32 @@ const MessageService = () => {
                 setLogin(login);
                 setMessageList(messages);
                 setUsers(users);
-                setCode(code[0].c);
-                setCodeId(code[0]._id)
+                
+                //Cheeky little upsert
+                if (code.length > 0)                                         
+                    setCode(code[0]);                
+                else {
+                    const x: codeInterface ={
+                        c:"",
+                        uid: users._id
+                    }                    
+                    client.service('code').create(x).then((r:any) => {
+                        setCode(r);
+                      });                      
+                }
+                
+                 
                 getSketches();                                
             });
         });
 
         // On logout reset all all local state (which will then show the login screen)
-        client.on('logout', () => {
-     
+        client.on('logout', () => {     
             setLogin({})
             setMessageList([]);
             setUsers([]);
             setSketchs([]);
-            setCode("");
+            setCode({});
             isLoggedIn = false;          
         });
 
@@ -76,7 +87,7 @@ const MessageService = () => {
         });
 
         code.on('updated', (code: any) => 
-            setCode(code.c)  
+            setCode(code)  
         );
 
         sketches.on('created', (sketch: any) =>                  
@@ -127,7 +138,6 @@ const MessageService = () => {
                         users={usersList} 
                         sketchList={sketchList}
                         codeList={codeList}  
-                        codeId={codeId as string}
                         userId={loginState.user ? loginState.user._id : ""} />
         </React.Fragment>);
     }

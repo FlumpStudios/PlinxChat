@@ -1,4 +1,5 @@
 export interface codeInterface {
-    code: string; 
-    user: string;
+    c?: string; 
+    uid?: string;
+    _id?: string
 }

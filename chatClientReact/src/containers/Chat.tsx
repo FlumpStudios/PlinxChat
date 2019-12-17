@@ -16,9 +16,8 @@ interface ChatProps {
   users: User[],
   messages: any[];
   userId: string;  
-  codeList: string;
+  codeList: codeInterface;
   sketchList : sketchInfo[];
-  codeId : string;
 
   getSketchDataFromApi:Function;
 }
@@ -102,7 +101,7 @@ const handleSetToCode = () =>
         />
   
   const codeBox = () =>
-       <Codebox codeId={props.codeId} apiDate={codeList}/>
+       <Codebox uid={userId} apiData={codeList}/>
 
   const messageBox = () =>
     <MessageBox messages={messages}/>

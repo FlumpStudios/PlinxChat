@@ -5,26 +5,39 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import client from '../feathers';
 
-
 interface CodeBoxProps{
-  apiDate: string;
-  codeId:string;
+  apiData: codeInterface;
+  uid: string;
 }
+export const Codebox = (props: CodeBoxProps) => {  
+const { apiData: apiData, uid } = props;
 
+const [code, setCode] = useState<string>("");
 
-export const Codebox = (props: CodeBoxProps) => {
+useEffect(() => {
+  setCode(props.apiData.c || "");
+},[])
+
+  const onChange = async (c:string = "") =>  {    
+    const x = {
+      uid: uid,
+      c:c,
+     }
+    client.service('code').update(apiData._id, x);
+    setCode(c);
+  }
+
+  const data = () => {        
+    if(apiData.uid != uid) return apiData.c;
+    else return code;
+  }
   
-const [code, setCode] = useState("");
-
-  const onChange = async (c:string = "") =>  
-    await client.service('code').update(props.codeId, {c})
-    
   return <AceEditor
     mode="javascript"
     theme="monokai"
     onChange={onChange}
     name="UNIQUE_ID_OF_DIV"
-    value={props.apiDate}
+    value={data()}
     editorProps={{ $blockScrolling: true }}
   /> 
 }
