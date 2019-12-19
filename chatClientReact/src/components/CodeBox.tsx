@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from 'react';
 import AceEditor from "react-ace";
 import {codeInterface} from '../sharedInterfaces/codeInterfaces';
 import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/theme-github";
+import "ace-builds/src-noconflict/theme-monokai";
 import client from '../feathers';
 
 interface CodeBoxProps{
@@ -33,11 +33,13 @@ useEffect(() => {
   }
   
   return <AceEditor
+    style={{width:"100%"}}
     mode="javascript"
     theme="monokai"
     onChange={onChange}
-    name="UNIQUE_ID_OF_DIV"
+    name="code-editor"
     value={data()}
+    highlightActiveLine={true}
     editorProps={{ $blockScrolling: true }}
   /> 
 }
