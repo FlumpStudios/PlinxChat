@@ -3,6 +3,8 @@ export interface sketchInfo {
   y: number,
   px: number,
   py: number,
+  w: number,
+  c: string
   userId: string
 }
 
