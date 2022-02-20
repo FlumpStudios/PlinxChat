@@ -59,10 +59,10 @@ const Login = () => {
                 </Form>
                 <Button className="login-element" color='teal' fluid size='large'> <small>Continue as guest</small></Button>
                 <Segment className="login-element">
-                   <a href="http://localhost:3030/oauth/github" target="_blank"> <Icon className="github" /> <small>Login with github</small></a>
+                   <a href="http://52.56.74.255:8085/oauth/github" target="_blank"> <Icon className="github" /> <small>Login with github</small></a>
                 </Segment>
                 <Segment className="login-element">
-                <a href="http://localhost:3030/oauth/google" target="_blank"> <Icon className="google" /> <small>Login with google</small></a>
+                <a href="http://52.56.74.255:8085/oauth/google" target="_blank"> <Icon className="google" /> <small>Login with google</small></a>
                 </Segment>
                 <br />
                 <Message className="login-element">
