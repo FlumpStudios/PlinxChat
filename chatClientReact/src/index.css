@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: darkslategrey;
 }
 
 code {
@@ -23,7 +24,8 @@ code {
   top: 0;
   left: 0;
   width: inherit;
-  height: auto;  
+  height: auto; 
+  background-color: black ; 
 }
 
 .login-element:hover{
